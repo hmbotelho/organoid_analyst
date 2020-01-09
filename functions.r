@@ -1155,7 +1155,7 @@ initial.slopes <- function(x,y){
 
 # Generates a 'convenience matrix' expressing the value of a variable as a function of well and time
 reshapeFIS <- function(df, colWell, colTime, colVariable, colCompound, colConcentration, colTreatment){
-    
+
     # Extract data
     wideby <- by(df, df[[colTime]], function(x){
         temp <- x[[colVariable]]
@@ -1166,7 +1166,7 @@ reshapeFIS <- function(df, colWell, colTime, colVariable, colCompound, colConcen
     datamat  <- as.matrix(do.call("rbind", wideby))
     roworder <- order(as.numeric(row.names(datamat)))
     colorder <- order(as.numeric(colnames(datamat)))
-    datamat  <- datamat[roworder, colorder]
+    datamat  <- datamat[roworder, colorder, drop=F]
     class(datamat) <- "character"
     
     # add labels

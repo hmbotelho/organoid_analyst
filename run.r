@@ -1,9 +1,8 @@
 source("functions.r")
 
-dependencies <- c("shiny", "shinyjs", "ggplot2", "tcltk",
-                  "caTools", "xlsx", "parallel", "magick",
-                  "dplyr", "raster")
+dependencies <- c("shiny", "shinyFiles", "shinyjs", 
+                  "ggplot2", "dplyr", "caTools", "raster",
+                  "parallel", "fs", "xlsx", "magick")
 sapply(dependencies, loadLibrary)
 
-library(shiny)
 runApp(launch.browser = TRUE)
