@@ -70,9 +70,11 @@ To install Organoid Analyst you will need:
 
 2. **Fiji**: Dowload from [here](http://fiji.sc/) and unzip (Windows) or install (macOS).
 
-3. **R**: Download R from the [CRAN website](https://cran.r-project.org/). Make sure to download the version matching your computer's operating system (Windows, macOS) and system architecture (32 bit, 64 bit). Then, install and run it.
+3. **Java**: Download the Java Development Kit (JDK) from [here](https://www.oracle.com/java/technologies/javase-downloads.html). Choose the version that matches your operating system and system architecture (32 bit, 64 bit).
 
-4. **R packages**: in the R console, next to the `> |` prompt, type the following commands:
+4. **R**: Download R from the [CRAN website](https://cran.r-project.org/). Make sure to download the version matching your computer's operating system (Windows, macOS) and system architecture (32 bit, 64 bit). Then, install and run it.
+
+5. **R packages**: in the R console, next to the `> |` prompt, type the following commands:
 ```
 install.packages("devtools")
 library(devtools)
@@ -365,7 +367,53 @@ library(htmrenamer)
 ___
 
 
-**Java error**  
+**rJava error 1**  
+If R thows the following (or similar) error message when running Organoid Analyst
+
+```
+Error: package or namespace load failed for ‘xlsx’:
+ .onLoad failed in loadNamespace() for 'rJava', details:
+  call: fun(libname, pkgname)
+  error: JAVA_HOME cannot be determined from the Registry
+```
+
+it means that the JDK is not installed. 
+Download the JDK from [here](https://www.oracle.com/java/technologies/javase-downloads.html). Choose the version that matches your operating system and system architecture (32 bit, 64 bit).
+
+
+**rJava error 2**  
+If R thows the following (or similar) error message when running Organoid Analyst
+
+```
+Error: package or namespace load failed for ‘xlsx’:
+ .onLoad failed in loadNamespace() for 'xlsx', details:
+  call: fun(libname, pkgname)
+  error: Your java version is 14.  Need 1.5.0 or higher.
+```
+
+it means that there is an incompatibility between the JDK version intalled in your computer and the `xlsx` R package. 
+To install compatible versions, do the following:
+
+1. Uninstall the Java Development Kit (instructions for [Windows](https://www.java.com/en/download/help/uninstall_java.xml) and [macOS](https://www.java.com/en/download/help/mac_uninstall_java.xml))
+    
+2. Download and install [JDK version 13.0.1](https://www.oracle.com/java/technologies/javase/jdk13-archive-downloads.html). Choose the version that matches your operating system and system architecture (32 bit, 64 bit).
+    
+3. Open R and uninstall `xlsx`:
+    ```
+    remove.packages("xlsx")
+    ```
+    
+4. Install `xlsx`version 0.6.3:
+    ```
+    install.packages("devtools")
+    library(devtools)
+    install_version("xlsx", version = "0.6.3")
+    ```
+    
+It should now be possible to run Organoid Analyst.
+
+
+**rJava error 3**  
 If R thows the following (or similar) error message when running Organoid Analyst
 
 ```
