@@ -1,7 +1,8 @@
 # Organoid Analyst <img src='./img/logo/OA_logo.png' align="right" height="139" />
 *Statistical analysis of the Forskolin-Induced Swelling (FIS) assay*
 
-<br/>
+<br/><br/>
+
 ![Organoid Analyst workflow](./img/schemes/OA_scheme.gif)
 
 
