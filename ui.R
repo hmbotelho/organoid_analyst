@@ -158,10 +158,15 @@ shinyUI(navbarPage("Organoid Analyst", id = "mainNavbarPage",
 
     tabPanel("About", value = "tabAbout",
         wellPanel(
-            p("By Hugo Botelho, July 2019"),
+            p("By Hugo Botelho, April 2020"),
             a(href="mailto:hmbotelho@fc.ul.pt", "hmbotelho@fc.ul.pt"), br(),
-            a(href="mailto:hugobotelho@gmail.com", "hugobotelho@gmail.com"), br(),br(),
-            a(href="http://webpages.fc.ul.pt/~hmbotelho/", "webpages.fc.ul.pt/~hmbotelho/")
+            a(href="mailto:hugobotelho@gmail.com", "hugobotelho@gmail.com"), br(),
+			a(href="http://webpages.fc.ul.pt/~hmbotelho/", "webpages.fc.ul.pt/~hmbotelho/"), br(), br(),
+			h3("Online repository & source code"),
+			icon("github"), a(href="https://github.com/hmbotelho/organoid_analyst", "github.com/hmbotelho/organoid_analyst"),
+			p("Licensed under the GNU General Public License v3.0"), br(),
+			h3("Citing Organoid Analyst"),
+			p(HTML("Hagemeijer MC, Vonk AM, Awatade NT, Silva IAL, Tischer C, Hilsenstein V, Beekman JM, Amaral MD, Botelho HM (2020) <strong>An open-source high-content analysis workflow for CFTR function measurements using the forskolin-induced swelling assay</strong> <i>submitted</i>"))
         )
     )
 ))
