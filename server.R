@@ -1571,7 +1571,7 @@ shinyServer(function(input, output, session) {
             cat("┌-----------------------------------------------------------------------------┐", file = LogFile, sep="\n", append=TRUE)
             cat("|  QUALITY CONTROL SETTINGS                                                   |", file = LogFile, sep="\n", append=TRUE)
             cat("└-----------------------------------------------------------------------------┘", file = LogFile, sep="\n", append=TRUE)
-            cat(paste0("  Wells excluded from analysis                      │  ", paste(OA[["QClist"]], collapse = ", ")), file = LogFile, sep="\n", append=TRUE)
+            cat(paste0("  Wells excluded from analysis                      │  ", paste(sort(OA[["QClist"]]), collapse = ", ")), file = LogFile, sep="\n", append=TRUE)
             cat(paste0("  Name of the column with organoid ID               │  ", OA[["Settings_colOrganoidID"]]), file = LogFile, sep="\n", append=TRUE)
             cat(paste0("  ID of invalid organoids                           │  ", OA[["Settings_nameInvalid"]]), file = LogFile, sep="\n", append=TRUE)
             cat(paste0("  Name of the column with organoid center (X)       │  ", OA[["Settings_colX"]]), file = LogFile, sep="\n", append=TRUE)

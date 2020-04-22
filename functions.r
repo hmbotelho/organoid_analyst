@@ -1052,19 +1052,20 @@ normalize100 <- function(time, values){
 
 # Calculates the AUC for increasingly larger curves: [x0,y0 : x0,y0], [x0,y0 : x1,y1], [x0,y0 : x2,y2], [x0,y0 : x3,y3], ...
 cumulativeAUC <- function(x, y){
+
+    # ====EXAMPLE1=====
+    # time	area    output
+    # 0     0       0
+    # 8		3       12
+    # 16	6       48
+    # 24	10      112
     
-    # ====INPUT=====
-    # time	area
-    # 0     0
-    # 8		3.379
-    # 16	6.464
-    # 24	10.872
-    
-    # ====OUTPUT====
-    # 0.0000
-    # 13.5162
-    # 52.8893
-    # 122.2331
+    # ====EXAMPLE2 (order does not matter=====
+    # time	area    output
+    # 8     3       12
+    # 16	6       48
+    # 0     0       0
+    # 24	10      112
     
     # Make sure x and y are numeric, have the same size and contain some data
     # The AUC for a single data point is 0
@@ -1073,10 +1074,16 @@ cumulativeAUC <- function(x, y){
     if (length(x) != length(y)) {stop ("Vectors have different lengths.")}
     if (length(x) == 0) {stop ("Empty vectors.")}
     if (length(x) == 1) {return(0)}
+
+    # Make sure x & y are sorted
+    u <- order(x)
+    x1 <- x[u]
+    y1 <- y[u]
+    
     
     cumulateInt <- numeric(length(x))
-    names(cumulateInt) <- x
-    if(is.na(y[1])){
+    names(cumulateInt) <- x1
+    if(is.na(y1[1])){
         cumulateInt[1] <- NA
     } else{
         cumulateInt[1] <- 0 
@@ -1087,9 +1094,10 @@ cumulativeAUC <- function(x, y){
         # Integration range
         IntRange <- 1:i
         # Function trapz belongs to package "caTools"
-        cumulateInt[i] <- trapz(x[IntRange], y[IntRange])
+        cumulateInt[i] <- trapz(x1[IntRange], y1[IntRange])
     }
     
+    cumulateInt <- cumulateInt[order(u)]    # return AUC values in the same order as 'x'
     cumulateInt
 }
 

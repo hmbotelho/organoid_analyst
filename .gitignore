@@ -39,3 +39,6 @@ rsconnect/
 
 # package-related
 .Rbuildignore
+
+# Other files
+/logo/OA_logo.ai
