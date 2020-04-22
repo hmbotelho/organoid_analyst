@@ -79,7 +79,7 @@ To install Organoid Analyst you will need:
 ```
 install.packages("devtools")
 library(devtools)
-source_url("https://raw.github.com/hmbotelho/organoid_analyst/master/installer.R")
+source_url("https://github.com/hmbotelho/organoid_analyst/raw/master/installer.R")
 ```
 
 Hit enter/return after each line to execute the command.
