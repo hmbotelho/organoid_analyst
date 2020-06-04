@@ -1,6 +1,8 @@
 # Load dependencies
 source("functions.r")
 
+OAversion <- "1.0.0"
+
 dependencies <- c("shiny", "shinyFiles", "shinyjs", 
                   "ggplot2", "dplyr", "caTools", "raster",
                   "parallel", "fs", "xlsx", "magick")
@@ -21,8 +23,8 @@ shinyServer(function(input, output, session) {
         summary.slope                 = do.call(cbind,rep(data.frame(numeric()),7)),
         summary.auc                   = do.call(cbind,rep(data.frame(numeric()),7)),
         summary.areachange            = do.call(cbind,rep(data.frame(numeric()),7)),
-        sourcefolder                  = "C:/sample_dataset/CF00_01",
-        outputfolder                  = "C:/sample_dataset/CF00_01--cellprofiler--analysis",
+        sourcefolder                  = "C:/sample_dataset/demoplate_01",
+        outputfolder                  = "C:/sample_dataset/demoplate_01--cellprofiler--analysis",
         Settings_objFileName          = "objects.csv",
         Settings_TimeRes              = 10,
         Settings_colArea              = "Math_area_micronsq",
@@ -1530,6 +1532,7 @@ shinyServer(function(input, output, session) {
 
             cat("╔═════════════════════════════════════════════════════════════════════════════╗", file = LogFile, sep="\n", append=TRUE)
             cat("║  Organoid Analyst                                                           ║", file = LogFile, sep="\n", append=TRUE)
+            cat(paste0(c("║  ", OAversion, rep(" ", 75 - nchar(OAversion)), "║"), collapse = ""), file = LogFile, sep="\n", append=TRUE)
             cat(paste0(c("║  ", output_date, rep(" ", 75 - nchar(output_date)), "║"), collapse = ""), file = LogFile, sep="\n", append=TRUE)
             cat(paste0(c("║  ", output_time, rep(" ", 75 - nchar(output_time)), "║"), collapse = ""), file = LogFile, sep="\n", append=TRUE)
             cat("║                                                                             ║", file = LogFile, sep="\n", append=TRUE)
