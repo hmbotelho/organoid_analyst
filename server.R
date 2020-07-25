@@ -1,6 +1,3 @@
-rm( list = ls() )
-enableBookmarking(store = "url")
-
 # Load dependencies
 source("./functions.r")
 
