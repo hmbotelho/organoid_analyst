@@ -1,16 +1,4 @@
-# Load dependencies
-source("./functions.r")
-
 OAversion <- "1.0.0"
-
-dependencies <- c("shiny", "shinyFiles", "shinyjs", 
-                  "ggplot2", "dplyr", "caTools", "raster",
-                  "parallel", "fs", "xlsx", "magick")
-
-sapply(dependencies, loadLibrary)
-
-
-
 
 shinyServer(function(input, output, session) {
 

@@ -1,3 +1,16 @@
+# Load dependencies
+source("./functions.r")
+
+dependencies <- c("shiny", "shinyFiles", "shinyjs", 
+                  "ggplot2", "dplyr", "caTools", "raster",
+                  "parallel", "fs", "xlsx", "magick")
+
+sapply(dependencies, loadLibrary)
+
+
+
+
+
 shinyUI(navbarPage("Organoid Analyst", id = "mainNavbarPage",
 
     tabPanel("1. Load data", value = "tabLoad",
