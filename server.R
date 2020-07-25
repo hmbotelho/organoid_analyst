@@ -1,5 +1,5 @@
 # Load dependencies
-source("functions.r")
+source("./functions.r")
 
 OAversion <- "1.0.0"
 
