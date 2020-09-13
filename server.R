@@ -144,7 +144,7 @@ shinyServer(function(input, output, session) {
                 message("Finished concatenating")
                 message("")
 
-                output$table_rawdata <- renderDataTable(OA[["dataset.raw"]])
+                output$table_rawdata <- DT::renderDataTable(OA[["dataset.raw"]])
                 message("The dataset can be viewed in 'View Data > Raw data table'")
 
                 # Navigate to next tab
@@ -779,7 +779,7 @@ shinyServer(function(input, output, session) {
                 
                 
                 # Render results to be visible by the user
-                output$table_normalized <- renderDataTable(OA[["dataset.norm"]])
+                output$table_normalized <- DT::renderDataTable(OA[["dataset.norm"]])
                 message("Normalized values can be viewed in 'View Data > Normalized data'")
                 message("")
                 
@@ -1041,7 +1041,7 @@ shinyServer(function(input, output, session) {
         OA[["dataset.norm.QC"]][OA[["dataset.norm.QC"]]$well %in% OA[["QClist"]], c("sumarea", "normalized", "normalized_offset", "cumulative_AUC", OA[["colInitSlope"]])] <<- NA
 
         # Refresh data table display
-        output$table_normalized <- renderDataTable(OA[["dataset.norm"]])
+        output$table_normalized <- DT::renderDataTable(OA[["dataset.norm"]])
 
     })
 
