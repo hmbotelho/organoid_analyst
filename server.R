@@ -339,6 +339,7 @@ shinyServer(function(input, output, session) {
                 )
             })
             output$UI_QCSettings2     <- renderUI({
+                input$Settings_colOrganoidID
                 alllabels <- sort(unique(
                     OA[["dataset.raw"]][,OA[["Settings_colOrganoidID"]]]
                 ))
