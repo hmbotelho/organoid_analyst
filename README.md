@@ -111,7 +111,7 @@ runGitHub("organoid_analyst", "hmbotelho", launch.browser = T)
 
 ## <a name="dataset">5. Demonstration dataset</a>
 
-A demonstration dataset is provided [here](./demo_dataset).
+A demonstration dataset is provided [here](https://github.com/hmbotelho/FIS_analysis/tree/master/demo_dataset).
 
 **Assay description**  
 The FIS assay was performed using intestinal organoids homozygous for a class II CFTR mutation in the absence (DMSO) or presence of VX-809 and/or VX-770 (3.2 μM), as previously described [[2](#ref02)]. CFTR was activated by addition of forskolin (Fsk) in a concentration range from 0.008 μM – 5 μM. The layout of the assay plate is depicted below.
@@ -134,9 +134,9 @@ These are the main characteristics of the microscopy images in the demonstration
 - __Number of fluorescence channels:__ 1 (calcein green)
 
 The demonstration dataset is comprised of:
-1. [**Raw microscopy images**](./demo_dataset/03-images_renamed/demoplate_01) (91.8 MB)
-2. [**Image quantification: object-level area measurements**](./demo_dataset/05-images_analysis/demoplate_01--cellprofiler) (14.8 MB)
-3. [**Analysis of the demonstration dataset with Organoid Analyst**](./demo_dataset/05-images_analysis/demoplate_01--cellprofiler--analysis) (37.0 MB)
+1. [**Raw microscopy images**](https://github.com/hmbotelho/FIS_analysis/tree/master/demo_dataset/03-images_renamed/demoplate_01) (91.8 MB)
+2. [**Image quantification: object-level area measurements**](https://github.com/hmbotelho/FIS_analysis/tree/master/demo_dataset/05-images_analysis/demoplate_01--cellprofiler) (14.8 MB)
+3. [**Analysis of the demonstration dataset with Organoid Analyst**](https://github.com/hmbotelho/FIS_analysis/tree/master/demo_dataset/05-images_analysis/demoplate_01--cellprofiler--analysis) (37.0 MB)
 
 
 Image analysis was performed with a [pipeline from CellProfiler 3.1.9](./CellProfiler_pipeline).
@@ -162,7 +162,7 @@ runGitHub("organoid_analyst", "hmbotelho", launch.browser = T)
 
 3. The numbered items at the top navigation bar define the sequential steps involved in data analysis: loading data, specifying analysis settings, plotting and exporting results.
 
-4. Under `1. Load data`, click on `Choose a '--cellprofiler' or '--ij' folder...` and select the [folder](./demo_dataset/05-images_analysis/demoplate_01--cellprofiler) `demoplate_01--cellprofiler` from the demonstration dataset.
+4. Under `1. Load data`, click on `Choose a '--cellprofiler' or '--ij' folder...` and select the [folder](https://github.com/hmbotelho/FIS_analysis/tree/master/demo_dataset/05-images_analysis/demoplate_01--cellprofiler) `demoplate_01--cellprofiler` from the demonstration dataset.
 
     <p align="center"><img src="./img/gui/openfolder.png"></p>
 
@@ -184,7 +184,7 @@ runGitHub("organoid_analyst", "hmbotelho", launch.browser = T)
 
     * **Quality Control Settings:** Coordinates of organoid centroids and labels of organoids which should not be considered in the analysis. In the demonstration dataset, organoids which are not tracked during the entire time lapse (*e.g.* organoids which touch and become insistinguishable of each other) were assigned the label `NaN` in column `TrackObjects_Label_4`. This annotation can be used to exclude those organoids from analysis.
 
-    * **File Remapping Settings:** This module enables opening raw images, even if their location is not the same as when they were analyzes (*e.g.* when image quantification and data analysis are performed on different computers). In order for this to be possible, the user must provide the location of the [raw image folder](./demo_dataset/03-images_renamed/demoplate_01) in the computer that performed the image analysis and in the computer running Organoid Analyst. Whenever the file remapping settings are correct, a **`Found file!`** notice will be shown. See the table below for an example.
+    * **File Remapping Settings:** This module enables opening raw images, even if their location is not the same as when they were analyzes (*e.g.* when image quantification and data analysis are performed on different computers). In order for this to be possible, the user must provide the location of the [raw image folder](https://github.com/hmbotelho/FIS_analysis/tree/master/demo_dataset/03-images_renamed/demoplate_01) in the computer that performed the image analysis and in the computer running Organoid Analyst. Whenever the file remapping settings are correct, a **`Found file!`** notice will be shown. See the table below for an example.
 
     * **Segmentation Masks Settings:** Determines whether segmentation masks should be updated according to the quality control parameter defined above.
 
@@ -224,8 +224,8 @@ runGitHub("organoid_analyst", "hmbotelho", launch.browser = T)
     | **Interaction with Fiji Settings**             |                                                                   |
     | Path to Fiji (Windows) **[⁴](#t1_4)**          | C:/Fiji.app/ImageJ-win64.exe                                      |
 
-_**<a name="t1_1">¹</a>** Select the [folder](./demo_dataset/03-images_renamed/demoplate_01) containing the raw microscopy images on your computer (`demoplate_01` in the demonstration dataset)._  
-_**<a name="t1_2">²</a>** Select the location of the `demoplate_01--cellprofiler` [folder](./demo_dataset/05-images_analysis/demoplate_01--cellprofiler) in your computer._  
+_**<a name="t1_1">¹</a>** Select the [folder](https://github.com/hmbotelho/FIS_analysis/tree/master/demo_dataset/03-images_renamed/demoplate_01) containing the raw microscopy images on your computer (`demoplate_01` in the demonstration dataset)._  
+_**<a name="t1_2">²</a>** Select the location of the `demoplate_01--cellprofiler` [folder](https://github.com/hmbotelho/FIS_analysis/tree/master/demo_dataset/05-images_analysis/demoplate_01--cellprofiler) in your computer._  
 _**<a name="t1_3">³</a>** The length of the file name termination which differs from raw images to the segmentation masks. Example: In the demonstration dataset, raw microscopy files are named like `demoplate_01--fsk--0.008--W0001--P001--T0000--C00.tif` and segmentation masks are named like `demoplate_01--fsk--0.008--W0001--P001--T0000--masks.png`. The last **9** characters in the raw file names (`--C00.tif`) are the mentioned suffix._  
 _**<a name="t1_4">⁴</a>** Select the location of the Fiji executable file on your computer. Not required when running macOS._  
 
@@ -474,7 +474,7 @@ You should now be able to run Organoid Analyst.
 
 
 ## <a name="citation">9. Citation</a>
-- Hagemeijer *et al* (2020) **An open-source high-content analysis workflow for CFTR function measurements using the forskolin-induced swelling assay** *submitted*
+- Hagemeijer MC, Vonk AM, Awatade NT, Silva IAL, Tischer C, Hilsenstein V, Beekman JM, Amaral MD, Botelho HM (2020) **An open-source high-content analysis workflow for CFTR function measurements using the forskolin-induced swelling assay** *submitted*
 
 
 
