@@ -1408,24 +1408,24 @@ shinyServer(function(input, output, session) {
             Export_ISR               <- as.data.frame(reshapeFIS(OA[["dataset.norm"]], "well", "time", "initialSlope",      "compound", "concentration", "treatment"))[1:5,]
 
             # Create workbook and sheets
-            myWorkbook              <- createWorkbook()
-            sheet_sumarea           <- createSheet(wb = myWorkbook, sheetName = "sumarea")
-            sheet_normalized        <- createSheet(wb = myWorkbook, sheetName = "normalized")
-            sheet_normalized_offset <- createSheet(wb = myWorkbook, sheetName = "normalized_offset")
-            sheet_cumulative_AUC    <- createSheet(wb = myWorkbook, sheetName = "cumulative_AUC")
-            sheet_ISR               <- createSheet(wb = myWorkbook, sheetName = "initial_swelling_rate")
+            myWorkbook              <- openxlsx::createWorkbook()
+            sheet_sumarea           <- openxlsx::addWorksheet(myWorkbook, "sumarea")
+            sheet_normalized        <- openxlsx::addWorksheet(myWorkbook, "normalized")
+            sheet_normalized_offset <- openxlsx::addWorksheet(myWorkbook, "normalized_offset")
+            sheet_cumulative_AUC    <- openxlsx::addWorksheet(myWorkbook, "cumulative_AUC")
+            sheet_ISR               <- openxlsx::addWorksheet(myWorkbook, "initial_swelling_rate")
 
             # Add data to workbook
-            addDataFrame(x = Export_sumarea,           sheet = sheet_sumarea,           startRow = 1, col.names = FALSE)
-            addDataFrame(x = Export_normalized,        sheet = sheet_normalized,        startRow = 1, col.names = FALSE)
-            addDataFrame(x = Export_normalized_offset, sheet = sheet_normalized_offset, startRow = 1, col.names = FALSE)
-            addDataFrame(x = Export_cumulative_AUC,    sheet = sheet_cumulative_AUC,    startRow = 1, col.names = FALSE)
-            addDataFrame(x = Export_ISR,               sheet = sheet_ISR,               startRow = 1, col.names = FALSE)
+            openxlsx::writeData(myWorkbook, sheet = sheet_sumarea,           rowNames = TRUE, colNames = FALSE, x = Export_sumarea)
+            openxlsx::writeData(myWorkbook, sheet = sheet_normalized,        rowNames = TRUE, colNames = FALSE, x = Export_normalized)
+            openxlsx::writeData(myWorkbook, sheet = sheet_normalized_offset, rowNames = TRUE, colNames = FALSE, x = Export_normalized_offset)
+            openxlsx::writeData(myWorkbook, sheet = sheet_cumulative_AUC,    rowNames = TRUE, colNames = FALSE, x = Export_cumulative_AUC)
+            openxlsx::writeData(myWorkbook, sheet = sheet_ISR,               rowNames = TRUE, colNames = FALSE, x = Export_ISR)
 
             # Save workbok
             xlsxfile_norm <- paste0(OA[["outputfolder"]], "/FIS_normalized.xlsx")
             message(paste0("        Saving normalized data to ", xlsxfile_norm))
-            saveWorkbook(myWorkbook, xlsxfile_norm)
+            openxlsx::saveWorkbook(myWorkbook, xlsxfile_norm, overwrite = T)
             message("    Saved normalized data!")
             message("")
 
@@ -1436,20 +1436,20 @@ shinyServer(function(input, output, session) {
             message("    Starting export of summarized data")
 
             # Create workbook and sheets
-            myWorkbook   <- createWorkbook()
-            sheet_AUC    <- createSheet(wb = myWorkbook, sheetName = "AUC")
-            sheet_slopes <- createSheet(wb = myWorkbook, sheetName = "initial_swelling_rate")
-            sheet_AtA0   <- createSheet(wb = myWorkbook, sheetName = "AtA0")
+            myWorkbook   <- openxlsx::createWorkbook()
+            sheet_AUC    <- openxlsx::addWorksheet(myWorkbook, "AUC")
+            sheet_slopes <- openxlsx::addWorksheet(myWorkbook, "initial_swelling_rate")
+            sheet_AtA0   <- openxlsx::addWorksheet(myWorkbook, "AtA0")
 
             # Add data to workbook
-            addDataFrame(x = OA[["summary.auc"]],        sheet = sheet_AUC,    startRow = 1, row.names = FALSE)
-            addDataFrame(x = OA[["summary.slope"]],      sheet = sheet_slopes, startRow = 1, row.names = FALSE)
-            addDataFrame(x = OA[["summary.areachange"]], sheet = sheet_AtA0,   startRow = 1, row.names = FALSE)
+            openxlsx::writeData(myWorkbook, sheet = sheet_AUC,    rowNames = FALSE, colNames = TRUE, x = OA[["summary.auc"]])
+            openxlsx::writeData(myWorkbook, sheet = sheet_slopes, rowNames = FALSE, colNames = TRUE, x = OA[["summary.slope"]])
+            openxlsx::writeData(myWorkbook, sheet = sheet_AtA0,   rowNames = FALSE, colNames = TRUE, x = OA[["summary.areachange"]])
 
             # Save workbok
             xlsxfile_summary <- paste0(OA[["outputfolder"]], "/FIS_summary_", OA[["slider_tf"]], "min.xlsx")
             message(paste0("        Saving summary data to ", xlsxfile_summary))
-            saveWorkbook(myWorkbook, xlsxfile_summary)
+            openxlsx::saveWorkbook(myWorkbook, xlsxfile_summary, overwrite = T)
             message("    Saved summarized data!")
             message("")
 

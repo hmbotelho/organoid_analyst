@@ -1,7 +1,7 @@
 # These are the pacakges that Organoid Analyst depends on
 dependencies <- c("shiny", "shinyFiles", "shinyjs", 
-                  "ggplot2", "dplyr", "caTools", "raster",
-                  "parallel", "fs", "xlsx", "magick")
+                  "ggplot2", "dplyr", "caTools", "DT", "raster",
+                  "parallel", "fs", "openxlsx", "magick")
 
 
 
