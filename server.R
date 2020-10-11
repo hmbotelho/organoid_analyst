@@ -1,4 +1,4 @@
-OAversion <- "1.0.0"
+OAversion <- "1.0.1"
 
 shinyServer(function(input, output, session) {
 
