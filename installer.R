@@ -29,4 +29,30 @@ setupPackages <- function(packages){
     })
 }
 
+
+
+
+# caTools
+# since version 1.18.0 package 'caTools' requires R >= 3.6.0
+# Organoid is compatible with caTools 1.17.1.4 (R >= 2.2.0)
+Rver <- sub("^R version (.*?) (.*)$", "\\1", R.version$version.string)
+
+if(utils::compareVersion(Rver, "3.6.0") %in% c(0,1)){
+    # Rversion >= 3.6.0
+    # Compatible with the latest caTools version
+    # Leave the loading process to setupPackages(), called below
+} else{
+    # R < 3.6.0
+    # Not compatible with latest caTools version
+    if(utils::compareVersion(Rver, "2.2.0") %in% c(0,1)){
+        # 2.2.0 <= Rversion < 3.6.0
+        # Install caTools 1.17.1.4
+        install.packages("https://cran.r-project.org/src/contrib/Archive/caTools/caTools_1.17.1.4.tar.gz", repos=NULL, type="source", dependencies = TRUE)
+    } else{
+        stop("Organoid Analyst is not compatible with R version ", Rver)
+    }
+}
+
+
+
 setupPackages(dependencies)
