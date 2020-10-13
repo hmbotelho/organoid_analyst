@@ -39,7 +39,7 @@ concatenate.csv <- function(folder = getwd(), pattern = "objects\\.csv", recursi
     
     if(detectCores() <= 2 | !parallelize){
         # Read all files using single core processing
-        
+print("one core")
         output <- lapply(file_list, function(file){
             message(paste0("    ", file))
             read.csv(file, stringsAsFactors = FALSE)
@@ -47,7 +47,7 @@ concatenate.csv <- function(folder = getwd(), pattern = "objects\\.csv", recursi
         
     } else{
         # Read all files using multi-core processing
-        
+print("Multi core")
         cluster <- makePSOCKcluster(detectCores() - 1)
         output <- parLapply(cluster, file_list, function(file){
             read.csv(file, stringsAsFactors = FALSE)
@@ -74,7 +74,7 @@ concatenate.csv <- function(folder = getwd(), pattern = "objects\\.csv", recursi
 # discardTheseLabels      <- "NaN"
 
 # Creates a new version of CellProfiler's segmentation mask images that does not show organoids which do not meet QC parameters (as reported by their labels)
-makeSegmentationMasks <- function(df, colPath_oldmasks = "analyst_path_CPmasks", colPath_newmasks = "analyst_path_analystmasks", colPath_newlabels = "analyst_path_analystlabels", colX = "AreaShape_Center_X", colY = "AreaShape_Center_Y", colLabel = "TrackObjects_Label_2", discardTheseLabels = "Allow all organoids"){
+makeSegmentationMasks <- function(df, colPath_oldmasks = "analyst_path_CPmasks", colPath_newmasks = "analyst_path_analystmasks", colPath_newlabels = "analyst_path_analystlabels", colX = "AreaShape_Center_X", colY = "AreaShape_Center_Y", colLabel = "TrackObjects_Label_2", discardTheseLabels = "Allow all organoids", parallelize = TRUE){
     
     # library("magick")
     # library("parallel")
@@ -83,8 +83,8 @@ makeSegmentationMasks <- function(df, colPath_oldmasks = "analyst_path_CPmasks",
     
     
     # Use parallel processing, if possible
-    if(detectCores() < 2){
-        
+    if(parallelize == FALSE | detectCores() < 2){
+print("One core")
         # Use single core processing
         
         lapply(img_list, function(img_df){
@@ -177,7 +177,7 @@ makeSegmentationMasks <- function(df, colPath_oldmasks = "analyst_path_CPmasks",
     } else{
         
         # Use parallel processing
-        
+print("multi core")
         cluster  <- makePSOCKcluster(detectCores() - 1)
         clusterExport(cluster, varlist=c("colPath_oldmasks", "colPath_newlabels", "colPath_newmasks", "colX", "colY", "colLabel", "discardTheseLabels", "image_read", "image_graph", "image_info", "image_convert", "image_fill", "image_annotate", "image_write", "image_resize", "blank_magick", "pixelsWide", "pixelsTall"), envir=environment())
         

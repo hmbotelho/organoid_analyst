@@ -47,6 +47,7 @@ if(utils::compareVersion(Rver, "3.6.0") %in% c(0,1)){
     if(utils::compareVersion(Rver, "2.2.0") %in% c(0,1)){
         # 2.2.0 <= Rversion < 3.6.0
         # Install caTools 1.17.1.4
+        install.packages("https://cran.r-project.org/src/contrib/bitops_1.0-6.tar.gz", repos=NULL, type="source", dependencies = TRUE)
         install.packages("https://cran.r-project.org/src/contrib/Archive/caTools/caTools_1.17.1.4.tar.gz", repos=NULL, type="source", dependencies = TRUE)
     } else{
         stop("Organoid Analyst is not compatible with R version ", Rver)
