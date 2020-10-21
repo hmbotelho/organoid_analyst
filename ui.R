@@ -32,17 +32,8 @@ shinyUI(navbarPage("Organoid Analyst", id = "mainNavbarPage",
             br(),br(),br()
         )},
 
-        # Multiprocessor options
-        {fluidRow(
-            column(11,
-                   checkboxInput("Settings_parallelize", "Enable multiprocessor support? (if available)", TRUE)
-            ),
-            column(1,
-                   actionButton("help_Settings_parallelize", "", icon = icon("question-circle"))
-            ),
-            tags$style(type='text/css', "#help_Settings_objFileName {margin-top: 25px;}")
-        )},
         
+        uiOutput("UI_multiprocessor"),
         uiOutput("UI_sourcefolder"),
 
         # Echo: file concatenation

@@ -30,6 +30,7 @@ shinyServer(function(input, output, session) {
         Settings_colRawImgPath        = "Metadata_FileLocation",
         Settings_pathInTable          = "file:///C:/FIS",
         Settings_pathInComputer       = "C:\\FIS",
+        Settings_canUpdateLabels      = TRUE,
         Settings_generateMasks        = FALSE,
         Settings_MimagepathInTable    = "file:///C:/FIS/demo_dataset/03-images_renamed/demoplate_01",
         Settings_MimagepathInComputer = "C:\\FIS\\demo_dataset\\05-images_analysis\\demoplate_01--cellprofiler",
@@ -117,13 +118,25 @@ shinyServer(function(input, output, session) {
     shinyDirChoose(input, "Settings_folderOutput", roots = volumes, session = session, restrictions = system.file(package = "base"))
     
 
-
+    # Check whether image annotation is possible
+    # Image annotation is used to update object labels.
+    # It needs to be disabeled on some older systems where is does not work (e.g. OSX 10.11 running R 3.5.3)
+    canUpdateLabels <- TRUE
+    test_img <- magick::image_read("logo:")
+    tryCatch({
+        test_img <- magick::image_annotate(test_img, "Testing if annotation works", size = 50, color = "blue", boxcolor = "lightgreen",
+                                           degrees = 45, location = "+100+20")
+    },
+    error = function(e){
+        # Image annotation failed
+        canUpdateLabels <<- FALSE
+    })
+    OA[["Settings_canUpdateLabels"]] <- canUpdateLabels
 
 
     # 1. Data loading ------------------------------------
 
     ### Import a CellProfiler data folder
-
     observeEvent(input$Settings_folderInput, {
 
         # Make sure to respond only if the user has selcted a folder
@@ -500,7 +513,7 @@ shinyServer(function(input, output, session) {
                         column(1,
                                actionButton("help_Settings_OAMasksFileSuffix", "", icon = icon("question-circle"))
                         ),
-                        tags$style(type='text/css', "#help_Settings_OAMasksFileSuffix {margin-top: 0px;}")
+                        tags$style(type='text/css', "#help_Settings_OAMasksFileSuffix {margin-top: 25px;}")
                     )
                 )
             })
@@ -521,12 +534,19 @@ shinyServer(function(input, output, session) {
                 )
             })
             output$UI_MasksSettings7  <- renderUI({
+
                 if(is.null(input$Settings_generateMasks)) return(NULL)
                 if(!input$Settings_generateMasks) return(NULL)
+                if(OA[["Settings_canUpdateLabels"]]){
+                    txt_annotations <- NULL
+                }else{
+                    txt_annotations <- "This system does not support object labels"
+                }
 
                 fluidRow(
                     column(11,
-                           em(strong("Sample labels file: "), sample_newLabelsPath())
+                           em(strong("Sample labels file: "), sample_newLabelsPath()),
+                           strong(div(txt_annotations, style = "color:darkred"))
                     )
                 )
             })
@@ -607,7 +627,28 @@ shinyServer(function(input, output, session) {
         }
     })
 
+    ### Multi-processor options
+    output$UI_multiprocessor <- renderUI({
 
+        if(parallel::detectCores() < 2){
+            # System is not multi-core. Disable multi-core options
+            OA[["Settings_parallelize"]] <<- FALSE
+            return(NULL)
+        }
+        
+        tagList(
+            fluidRow(
+                column(11,
+                       checkboxInput("Settings_parallelize", "Enable multiprocessor support?", TRUE)
+                ),
+                column(1,
+                       actionButton("help_Settings_parallelize", "", icon = icon("question-circle"))
+                ),
+                tags$style(type='text/css', "#help_Settings_parallelize {margin-top: 5px;}")
+            )
+        )
+    })
+    
     ### Change output folder
     observeEvent(input$Settings_folderOutput, {
 
@@ -808,6 +849,7 @@ shinyServer(function(input, output, session) {
                                           colY               = OA[["Settings_colY"]],
                                           colLabel           = OA[["Settings_colOrganoidID"]],
                                           discardTheseLabels = OA[["Settings_nameInvalid"]],
+                                          update_labels      = OA[["Settings_canUpdateLabels"]],
                                           parallelize        = OA[["Settings_parallelize"]])
                     message("")
                     message("Finished generating segmentation masks.")
@@ -1647,8 +1689,8 @@ shinyServer(function(input, output, session) {
     
     ### Enable multiprocessor support ###
     observeEvent(input$help_Settings_parallelize, {
-        showModal(modalDialog(title = "Enable multiprocessor support? (if available)",
-                              "If this machine has a multi-core processor, should additional cores be used to accelerate processing? This setting has no effect on single-core computers.",
+        showModal(modalDialog(title = "Enable multiprocessor support?",
+                              "If this machine has a multi-core processor, should additional cores be used to accelerate processing?",
                               easyClose = TRUE))
     })
 
@@ -1817,7 +1859,7 @@ shinyServer(function(input, output, session) {
 	### Suffix of Organoid Analyst labels ###
 	observeEvent(input$help_Settings_OALabelsFileSuffix, {
         showModal(modalDialog(title = "Suffix for Organoid Analyst labels files",
-                              "This suffix will identify the organoid labels images generated by Organoid Analyst. See the sample file path to see how this applies to your data.",
+                              "This suffix will identify the organoid labels images generated by Organoid Analyst. See the sample file path to see how this applies to your data.\nOlder systems may not support generating the labels image. In this situation blank labels images will be generated.",
                               easyClose = TRUE))
     })
 

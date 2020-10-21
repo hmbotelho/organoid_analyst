@@ -48,7 +48,7 @@ concatenate.csv <- function(folder = getwd(), pattern = "objects\\.csv", recursi
     } else{
         # Read all files using multi-core processing
 
-        cluster <- makePSOCKcluster(detectCores() - 1)
+        cluster <- makePSOCKcluster(detectCores())
         output <- parLapply(cluster, file_list, function(file){
             read.csv(file, stringsAsFactors = FALSE)
         })
@@ -65,7 +65,7 @@ concatenate.csv <- function(folder = getwd(), pattern = "objects\\.csv", recursi
 # Segmentation masks ------------------------------------------------------
 
 # Creates a new version of CellProfiler's segmentation mask images that does not show organoids which do not meet QC parameters (as reported by their labels)
-makeSegmentationMasks <- function(df, colPath_oldmasks = "analyst_path_CPmasks", colPath_newmasks = "analyst_path_analystmasks", colPath_newlabels = "analyst_path_analystlabels", colX = "AreaShape_Center_X", colY = "AreaShape_Center_Y", colLabel = "TrackObjects_Label_2", discardTheseLabels = "Allow all organoids", parallelize = TRUE){
+makeSegmentationMasks <- function(df, colPath_oldmasks = "analyst_path_CPmasks", colPath_newmasks = "analyst_path_analystmasks", colPath_newlabels = "analyst_path_analystlabels", colX = "AreaShape_Center_X", colY = "AreaShape_Center_Y", colLabel = "TrackObjects_Label_2", discardTheseLabels = "Allow all organoids", update_labels = TRUE, parallelize = TRUE){
     
     # library("magick")
     # library("parallel")
@@ -130,16 +130,20 @@ makeSegmentationMasks <- function(df, colPath_oldmasks = "analyst_path_CPmasks",
                         
                         if("Allow all organoids" %in% discardTheseLabels){
                             # Do not discard any organoids
-                            xy         <- paste0("+", x-pixelsWide(label)*0.5, "+", y-pixelsTall(label))
-                            img_labels <- image_annotate(img_labels, label, size = 10, color = "white", location = xy)
+                            if(update_labels){
+                                xy         <- paste0("+", x-pixelsWide(label)*0.5, "+", y-pixelsTall(label))
+                                img_labels <- image_annotate(img_labels, label, size = 10, color = "white", location = xy)
+                            }
                         } else if(label %in% discardTheseLabels){
                             # Discard 'bad' organoids
                             xy         <- paste0("+", x, "+", y)
                             img_masks  <- image_fill(img_masks, "black", point = xy, fuzz = 0)
                         } else{
                             # Allowed organoid
-                            xy         <- paste0("+", x-pixelsWide(label)*0.5, "+", y-pixelsTall(label))
-                            img_labels <- image_annotate(img_labels, label, size = 10, color = "white", location = xy)
+                            if(update_labels){
+                                xy         <- paste0("+", x-pixelsWide(label)*0.5, "+", y-pixelsTall(label))
+                                img_labels <- image_annotate(img_labels, label, size = 10, color = "white", location = xy)
+                            }
                         }   
                     }
                     
@@ -169,8 +173,8 @@ makeSegmentationMasks <- function(df, colPath_oldmasks = "analyst_path_CPmasks",
         
         # Use parallel processing
 
-        cluster  <- makePSOCKcluster(detectCores() - 1)
-        clusterExport(cluster, varlist=c("colPath_oldmasks", "colPath_newlabels", "colPath_newmasks", "colX", "colY", "colLabel", "discardTheseLabels", "image_read", "image_graph", "image_info", "image_convert", "image_fill", "image_annotate", "image_write", "image_resize", "blank_magick", "pixelsWide", "pixelsTall"), envir=environment())
+        cluster  <- makePSOCKcluster(detectCores())
+        clusterExport(cluster, varlist=c("colPath_oldmasks", "colPath_newlabels", "colPath_newmasks", "colX", "colY", "colLabel", "discardTheseLabels", "update_labels", "image_read", "image_graph", "image_info", "image_convert", "image_fill", "image_annotate", "image_write", "image_resize", "blank_magick", "pixelsWide", "pixelsTall"), envir=environment())
         
         parLapply(cluster, img_list, function(img_df){
             # img_df <- img_list[[1]]
@@ -224,16 +228,20 @@ makeSegmentationMasks <- function(df, colPath_oldmasks = "analyst_path_CPmasks",
                         
                         if("Allow all organoids" %in% discardTheseLabels){
                             # Do not discard any organoids
-                            xy         <- paste0("+", x-pixelsWide(label)*0.5, "+", y-pixelsTall(label))
-                            img_labels <- image_annotate(img_labels, label, size = 10, color = "white", location = xy)
+                            if(update_labels){
+                                xy         <- paste0("+", x-pixelsWide(label)*0.5, "+", y-pixelsTall(label))
+                                img_labels <- image_annotate(img_labels, label, size = 10, color = "white", location = xy)
+                            }
                         } else if(label %in% discardTheseLabels){
                             # Discard 'bad' organoids
                             xy         <- paste0("+", x, "+", y)
                             img_masks  <- image_fill(img_masks, "black", point = xy, fuzz = 0)
                         } else{
                             # Allowed organoid
-                            xy         <- paste0("+", x-pixelsWide(label)*0.5, "+", y-pixelsTall(label))
-                            img_labels <- image_annotate(img_labels, label, size = 10, color = "white", location = xy)
+                            if(update_labels){
+                                xy         <- paste0("+", x-pixelsWide(label)*0.5, "+", y-pixelsTall(label))
+                                img_labels <- image_annotate(img_labels, label, size = 10, color = "white", location = xy)
+                            }
                         }   
                     }
                     
