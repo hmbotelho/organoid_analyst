@@ -39,7 +39,7 @@ concatenate.csv <- function(folder = getwd(), pattern = "objects\\.csv", recursi
     
     if(detectCores() <= 2 | !parallelize){
         # Read all files using single core processing
-print("one core")
+
         output <- lapply(file_list, function(file){
             message(paste0("    ", file))
             read.csv(file, stringsAsFactors = FALSE)
@@ -47,7 +47,7 @@ print("one core")
         
     } else{
         # Read all files using multi-core processing
-print("Multi core")
+
         cluster <- makePSOCKcluster(detectCores() - 1)
         output <- parLapply(cluster, file_list, function(file){
             read.csv(file, stringsAsFactors = FALSE)
@@ -63,15 +63,6 @@ print("Multi core")
 
 
 # Segmentation masks ------------------------------------------------------
-# dataset <- dget("c:/users/hugo/Desktop/dataset.rdata")
-# df                      <- dataset
-# colPath_oldmasks        <- "OA_path_rawmask"
-# colPath_newmasks        <- "OA_path_OAmask"
-# colPath_newlabels       <- "OA_path_OAlabel"
-# colX                    <- "AreaShape_Center_X"
-# colY                    <- "AreaShape_Center_Y"
-# colLabel                <- "TrackObjects_Label_2"
-# discardTheseLabels      <- "NaN"
 
 # Creates a new version of CellProfiler's segmentation mask images that does not show organoids which do not meet QC parameters (as reported by their labels)
 makeSegmentationMasks <- function(df, colPath_oldmasks = "analyst_path_CPmasks", colPath_newmasks = "analyst_path_analystmasks", colPath_newlabels = "analyst_path_analystlabels", colX = "AreaShape_Center_X", colY = "AreaShape_Center_Y", colLabel = "TrackObjects_Label_2", discardTheseLabels = "Allow all organoids", parallelize = TRUE){
@@ -84,7 +75,7 @@ makeSegmentationMasks <- function(df, colPath_oldmasks = "analyst_path_CPmasks",
     
     # Use parallel processing, if possible
     if(parallelize == FALSE | detectCores() < 2){
-print("One core")
+
         # Use single core processing
         
         lapply(img_list, function(img_df){
@@ -104,7 +95,7 @@ print("One core")
                 
                 
                 # Image file exists. Process it normally
-                
+
                 # Open and initialize images for masks and labels
                 img_masks  <- image_read(img_df[1, colPath_oldmasks])
                 xres       <- image_info(img_masks)[1,"width"]
@@ -159,7 +150,7 @@ print("One core")
             
             
             
-            
+
             # save images
             if(!dir.exists(dirname(img_df[1,colPath_newmasks]))){
                 dir.create(dirname(img_df[1,colPath_newmasks]), recursive = TRUE)
@@ -177,7 +168,7 @@ print("One core")
     } else{
         
         # Use parallel processing
-print("multi core")
+
         cluster  <- makePSOCKcluster(detectCores() - 1)
         clusterExport(cluster, varlist=c("colPath_oldmasks", "colPath_newlabels", "colPath_newmasks", "colX", "colY", "colLabel", "discardTheseLabels", "image_read", "image_graph", "image_info", "image_convert", "image_fill", "image_annotate", "image_write", "image_resize", "blank_magick", "pixelsWide", "pixelsTall"), envir=environment())
         

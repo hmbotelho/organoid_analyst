@@ -659,7 +659,8 @@ shinyServer(function(input, output, session) {
             OA[["dataset.raw"]]$OA_path_rawimage <<- gsub("\\\\", "/", OA[["dataset.raw"]]$OA_path_rawimage)
             OA[["dataset.raw"]]$OA_path_rawimage <<- gsub(pathInTable,
                                                           pathInComputer,
-                                                          OA[["dataset.raw"]]$OA_path_rawimage)
+                                                          OA[["dataset.raw"]]$OA_path_rawimage,
+                                                          ignore.case = TRUE)
 
             # Raw masks
             if(OA[["Settings_generateMasks"]]){
@@ -672,7 +673,10 @@ shinyServer(function(input, output, session) {
                 OA[["dataset.raw"]]$OA_path_rawmask <<- OA[["dataset.raw"]][[OA[["Settings_colRawImgPath"]]]]
                 OA[["dataset.raw"]]$OA_path_rawmask <<- gsub("\\\\", "/", OA[["dataset.raw"]]$OA_path_rawmask)
                 OA[["dataset.raw"]]$OA_path_rawmask <<- sub("^file:///", "", OA[["dataset.raw"]]$OA_path_rawmask)
-                OA[["dataset.raw"]]$OA_path_rawmask <<- sub(pathInTable, pathInComputer, OA[["dataset.raw"]]$OA_path_rawmask)
+                OA[["dataset.raw"]]$OA_path_rawmask <<- sub(pathInTable, 
+                                                            pathInComputer, 
+                                                            OA[["dataset.raw"]]$OA_path_rawmask,
+                                                            ignore.case = TRUE)
 
 
                 OA[["dataset.raw"]]$OA_path_rawmask <<- sapply(OA[["dataset.raw"]]$OA_path_rawmask, function(x){
@@ -689,7 +693,10 @@ shinyServer(function(input, output, session) {
 
                 oldSuffix                           <- OA[["Settings_maskFileSuffix"]]
                 newSuffix                           <- paste0(OA[["Settings_OAMasksFileSuffix"]], ".png")
-                OA[["dataset.raw"]]$OA_path_OAmask <<- sub(OA[["sourcefolder"]], OA[["outputfolder"]], OA[["dataset.raw"]]$OA_path_rawmask)
+                OA[["dataset.raw"]]$OA_path_OAmask <<- sub(OA[["sourcefolder"]], 
+                                                           OA[["outputfolder"]], 
+                                                           OA[["dataset.raw"]]$OA_path_rawmask,
+                                                           ignore.case = TRUE)
                 OA[["dataset.raw"]]$OA_path_OAmask <<- sub(paste0(oldSuffix, "$"), newSuffix, OA[["dataset.raw"]]$OA_path_OAmask)
             } else{
                 OA[["dataset.raw"]]$OA_path_OAmask <<- NA
@@ -700,7 +707,10 @@ shinyServer(function(input, output, session) {
 
                 oldSuffix                            <- OA[["Settings_maskFileSuffix"]]
                 newSuffix                            <- paste0(OA[["Settings_OALabelsFileSuffix"]], ".png")
-                OA[["dataset.raw"]]$OA_path_OAlabel <<- sub(OA[["sourcefolder"]], OA[["outputfolder"]], OA[["dataset.raw"]]$OA_path_rawmask)
+                OA[["dataset.raw"]]$OA_path_OAlabel <<- sub(OA[["sourcefolder"]], 
+                                                            OA[["outputfolder"]], 
+                                                            OA[["dataset.raw"]]$OA_path_rawmask,
+                                                            ignore.case = TRUE)
                 OA[["dataset.raw"]]$OA_path_OAlabel <<- sub(paste0(oldSuffix, "$"), newSuffix, OA[["dataset.raw"]]$OA_path_OAlabel)
             } else{
                 OA[["dataset.raw"]]$OA_path_OAlabel <<- NA
