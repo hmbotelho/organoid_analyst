@@ -166,7 +166,7 @@ shinyUI(navbarPage("Organoid Analyst", id = "mainNavbarPage",
 
     tabPanel("About", value = "tabAbout",
         wellPanel(
-            p("By Hugo Botelho, April 2020"),
+            p("By Hugo Botelho, October 2020"),
             a(href="mailto:hmbotelho@fc.ul.pt", "hmbotelho@fc.ul.pt"), br(),
             a(href="mailto:hugobotelho@gmail.com", "hugobotelho@gmail.com"), br(),
 			a(href="http://webpages.fc.ul.pt/~hmbotelho/", "webpages.fc.ul.pt/~hmbotelho/"), br(), br(),

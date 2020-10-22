@@ -1175,15 +1175,22 @@ shinyServer(function(input, output, session) {
         OA[["summary.auc"]] <<- OA[["summary.auc"]]
 
 
+        # Subset data for visualization: desired compounds
+        selected_treat_p2 <- input$p2_selectTreatment
+        if(is.null(selected_treat_p2)){
+            selected_treat_p2 <- "All"
+        }
+        OA[["p2_selectTreatment"]] <- selected_treat_p2
+        
+        
+        
         ## Titration plot
         g_tit <<- plot_titration(df                = OA[["summary.auc"]],
                                  colX              = "concentration",
                                  colY              = "mean",
                                  colsdY            = "sd",
                                  colTreatment      = "compound",
-                                 pickThisTreatment = ifelse(is.null(isolate(input$p2_selectTreatment)),
-                                                            OA[["p2_selectTreatment"]],
-                                                            isolate(input$p2_selectTreatment)),
+                                 pickThisTreatment = selected_treat_p2,
                                  categoricalX      = TRUE,
                                  xlab              = "Compound Concentration",
                                  ylab              = "AUC (mean ± sd)",
@@ -1226,7 +1233,16 @@ shinyServer(function(input, output, session) {
         OA[["summary.auc"]] <- do.call("rbind", temp.auc)
         OA[["summary.auc"]] <<- OA[["summary.auc"]]
 
-
+        
+        # Subset data for visualization: desired compounds
+        selected_treat_p3 <- input$p3_selectTreatment
+        if(is.null(selected_treat_p3)){
+            selected_treat_p3 <- "All"
+        }
+        OA[["p3_selectTreatment"]] <- selected_treat_p3
+        
+        
+        
         ## Bar chart with error bars
         g_AUC <<- plot_AUC(df                = OA[["summary.auc"]],
                            colX              = "treatment",
@@ -1238,9 +1254,7 @@ shinyServer(function(input, output, session) {
                            axistitlesize     = 20,
                            axislabelsize     = 12,
                            colTreatment      = "compound",
-                           pickThisTreatment = ifelse(is.null(isolate(input$p3_selectTreatment)),
-                                                      OA[["p3_selectTreatment"]],
-                                                      isolate(input$p3_selectTreatment)),
+                           pickThisTreatment = selected_treat_p3,
                            colorbyTreatment  = ifelse(is.null(isolate(input$p3_showLUT)),
                                                       OA[["p3_showLUT"]],
                                                       isolate(input$p3_showLUT)))
@@ -1282,6 +1296,15 @@ shinyServer(function(input, output, session) {
         OA[["summary.slope"]] <<- OA[["summary.slope"]]
 
 
+        # Subset data for visualization: desired compounds
+        selected_treat_p4 <- input$p4_selectTreatment
+        if(is.null(selected_treat_p4)){
+            selected_treat_p4 <- "All"
+        }
+        OA[["p4_selectTreatment"]] <- selected_treat_p4
+        
+        
+        
         ## Bar chart with error bars
         g_slopes <<- plot_slopes(df                = OA[["summary.slope"]],
                                  colX              = "treatment",
@@ -1293,9 +1316,7 @@ shinyServer(function(input, output, session) {
                                  axistitlesize     = 20,
                                  axislabelsize     = 12,
                                  colTreatment      = "compound",
-                                 pickThisTreatment = ifelse(is.null(isolate(input$p4_selectTreatment)),
-                                                            OA[["p4_selectTreatment"]],
-                                                            isolate(input$p4_selectTreatment)),
+                                 pickThisTreatment = selected_treat_p4,
                                  colorbyTreatment  = ifelse(is.null(isolate(input$p4_showLUT)),
                                                             OA[["p4_showLUT"]],
                                                             isolate(input$p4_showLUT)))
@@ -1337,6 +1358,15 @@ shinyServer(function(input, output, session) {
         OA[["summary.areachange"]] <<- OA[["summary.areachange"]]
 
 
+        # Subset data for visualization: desired compounds
+        selected_treat_p5 <- input$p5_selectTreatment
+        if(is.null(selected_treat_p5)){
+            selected_treat_p5 <- "All"
+        }
+        OA[["p5_selectTreatment"]] <- selected_treat_p5
+
+        
+        
         ## Bar chart with error bars
         g_norm <<- plot_normalized(df                = OA[["summary.areachange"]],
                                    colX              = "treatment",
@@ -1348,9 +1378,7 @@ shinyServer(function(input, output, session) {
                                    axistitlesize     = 20,
                                    axislabelsize     = 12,
                                    colTreatment      = "compound",
-                                   pickThisTreatment = ifelse(is.null(isolate(input$p5_selectTreatment)),
-                                                              OA[["p5_selectTreatment"]],
-                                                              isolate(input$p5_selectTreatment)),
+                                   pickThisTreatment = selected_treat_p5,
                                    colorbyTreatment  = ifelse(is.null(isolate(input$p5_showLUT)),
                                                               OA[["p5_showLUT"]],
                                                               isolate(input$p5_showLUT)))
