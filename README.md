@@ -10,6 +10,8 @@
 * [1. Overview](#overview)
 * [2. Statistical background](#background)
 * [3. Setup](#installation)
+    * [3.1. Windows](#installation-windows)
+    * [3.2. macOS](#installation-macos)
 * [4. Running Organoid Analyst](#running)
 * [5. Demonstration dataset](#dataset)
 * [6. Analysis of a demonstration dataset](#analysis)
@@ -65,26 +67,65 @@ Within Organoid Analyst, data normalization uses the following algorithm:
 
 
 Organoid Analyst is a web application that runs in a web browser, powered by an R back-end.
-To install Organoid Analyst you will need:
+Follow the installation proedure that applies to your operating system. Installation only needs to be performed on the first time you run Organoid Analyst on a given computer.  
+The [troubleshooting](#troubleshooting) section contains fixes for the most common installation problems.
 
-1. **Web browser**
 
-2. **Fiji**: Dowload from [here](http://fiji.sc/) and unzip (Windows) or install (macOS).
+### <a name="installation-windows">3.1. Windows</a>
 
-3. **Java**: Download the Java Development Kit (JDK) from [here](https://www.oracle.com/java/technologies/javase-downloads.html). Choose the version that matches your operating system and system architecture (32 bit, 64 bit).
+1. A **Web browser** must be installed.
 
-4. **R**: Download R from the [CRAN website](https://cran.r-project.org/). Make sure to download the version matching your computer's operating system (Windows, macOS) and system architecture (32 bit, 64 bit). Then, install and run it.
+2. **R**: Download R from the [CRAN website](https://cran.r-project.org/) and install it.
 
-5. **R packages**: in the R console, next to the `> |` prompt, type the following commands:
+3. **Fiji**: Dowload from [here](http://fiji.sc/) and unzip.
+
+4. **Install R packages**: Open R. In the R console, next to the `> |` prompt, type the following:
+
 ```
-install.packages("devtools")
-library(devtools)
-source_url("https://github.com/hmbotelho/organoid_analyst/raw/master/installer.R")
+source("https://raw.githubusercontent.com/hmbotelho/organoid_analyst/master/installer.R")
+runGitHub("organoid_analyst", "hmbotelho", launch.browser=T)
 ```
 
 Hit enter/return after each line to execute the command.
+If prompted, select a folder in your computer and a CRAN mirror.
 
-The [troubleshooting](#troubleshooting) section contains fixes for the most common installation problems.
+*Tested with R version 4.0.3 running under Windows 10 Home version 2004, build 19041.508 (32 and 64bit)*
+
+
+### <a name="installation-macos">3.2. macOS</a>
+
+1. A **Web browser** must be installed.
+
+2. **R**: Download R from the [CRAN website](https://cran.r-project.org/) and install it.
+
+3. **Install the Command Line Tools for Xcode:** Download and install the latest version matching your macOS version from [here](https://developer.apple.com/download/more/?=command%20line%20tools) (Apple ID required).
+
+4. **Fiji**: Dowload from [here](http://fiji.sc/), unzip and move into the Applications folder.
+
+    Check whether you can run Fiji. Should you not, please check the [troubleshooting](#troubleshooting) section.
+
+5. **Install R packages**: Open R. In the R console, next to the `> |` prompt, type the following:
+
+```
+source("https://raw.githubusercontent.com/hmbotelho/organoid_analyst/master/installer.R")
+runGitHub("organoid_analyst", "hmbotelho", launch.browser=T)
+```
+
+Hit enter/return after each line to execute the command.
+If prompted, select a CRAN mirror.
+If asked `Do you want to install from sources the package which needs compilation?` write `Yes` or `y`
+
+The Organoid Analyst installation was successfully tested in the following environments:
+
+|      **OS version**       | **R version** | **Command Line Tools version** |
+|:-------------------------:|:-------------:|:------------------------------:|
+|    macOS 10.15 Catalina   |     4.0.3     |              11.5              |
+|     macOS 10.14 Mojave    |     4.0.3     |              8.3.2             |
+| macOS 10.13.6 High Sierra |     4.0.3     |              8.3.2             |
+|     macOS 10.12 Sierra    |     3.6.3     |              8.3.2             |
+|   OS X 10.11 El Capitan   |     3.5.3     |               7.3              |
+
+*Organoid Analyst is not compatible with older macOS/OS X versions.*
 
 
 
@@ -350,131 +391,66 @@ Additional information about most features in Organoid Analyst can be obtained i
 
 ## <a name="troubleshooting">8. Troubleshooting</a>
 
-This section contains fixes for the most common problems one may find when installing or running htmrenamer.
+This section contains fixes for the most common problems one may find when installing or running Organoid Analyst.
 
 
-**Packages fail to install**  
-If any of the required packages fails to install (error message similar to `Error: package or namespace load failed for ‘packagename’`), remove the problematic package with
+**Fiji cannot run (macOS only)**  
+If you get the following message when attempting to run Fiji:
 
-```
-remove.packages(packagename)
-```
+`"Fiji" cannot be opened because the developer cannot be verified.`
 
-and load htmrenamer with
+There are two ways to enable Fiji:
 
-```
-library(htmrenamer)
-```
+* **Solution 1**: Open the Applications folder, right click Fiji and click `Open`. You should then get the following message: `macOS cannot verify the developer of "Fiji". Are you sure you want to open it?`. Click OK.
+    
+ * **Solution 2**: Go to `System Preferences > Security & Privacy > General`. Select `Open Anyway` on Fiji.
 ___
 
 
-**rJava error 1**  
-If R thows the following (or similar) error message when running Organoid Analyst
+**Packages fail to install**  
+If any of the R packages required for Organoid Analyst fails to install one of the following error messages (or similar) will be displayed:
 
 ```
-Error: package or namespace load failed for ‘xlsx’:
- .onLoad failed in loadNamespace() for 'rJava', details:
-  call: fun(libname, pkgname)
-  error: JAVA_HOME cannot be determined from the Registry
+Loading required package: raster
+Error in library(x, character.only = TRUE) :
+  there is no package called 'raster'
 ```
 
-it means that the JDK is not installed. 
-Download the JDK from [here](https://www.oracle.com/java/technologies/javase-downloads.html). Choose the version that matches your operating system and system architecture (32 bit, 64 bit).
-
-
-**rJava error 2**  
-If R thows the following (or similar) error message when running Organoid Analyst
-
 ```
-Error: package or namespace load failed for ‘xlsx’:
- .onLoad failed in loadNamespace() for 'xlsx', details:
-  call: fun(libname, pkgname)
-  error: Your java version is 14.  Need 1.5.0 or higher.
+Error: package or namespace load failed for ‘raster’
 ```
 
-it means that there is an incompatibility between the JDK version intalled in your computer and the `xlsx` R package. 
-To install compatible versions, do the following:
-
-1. Uninstall the Java Development Kit (instructions for [Windows](https://www.java.com/en/download/help/uninstall_java.xml) and [macOS](https://www.java.com/en/download/help/mac_uninstall_java.xml))
-    
-2. Download and install [JDK version 13.0.1](https://www.oracle.com/java/technologies/javase/jdk13-archive-downloads.html). Choose the version that matches your operating system and system architecture (32 bit, 64 bit).
-    
-3. Open R and uninstall `xlsx`:
-    ```
-    remove.packages("xlsx")
-    ```
-    
-4. Install `xlsx`version 0.6.3:
-    ```
-    install.packages("devtools")
-    library(devtools)
-    install_version("xlsx", version = "0.6.3")
-    ```
-    
-It should now be possible to run Organoid Analyst.
-
-
-**rJava error 3**  
-If R thows the following (or similar) error message when running Organoid Analyst
-
 ```
-Error: package or namespace load failed for ‘rJava’:
- .onLoad failed in loadNamespace() for 'rJava', details:
-  call: dyn.load(file, DLLpath = DLLpath, ...)
-  error: unable to load shared object '/Users/yourname/Library/R/3.6/library/rJava/libs/rJava.so':
-  dlopen(/Users/yourname/Library/R/3.6/library/rJava/libs/rJava.so, 6): Library not loaded: /Library/Java/JavaVirtualMachines/jdk-11.0.1.jdk/Contents/Home/lib/server/libjvm.dylib
-  Referenced from: /Users/yourname/Library/R/3.6/library/rJava/libs/rJava.so
-  Reason: image not found
+ERROR: dependency 'sp' is not available for package 'raster'
 ```
 
-it means that there is an incorrect linking of the JDK version installed in your computer and the rJava package, which htmrenamer depends on.
-
-First, make sure that JDK is installed ([download site](https://www.oracle.com/technetwork/java/javase/downloads/)). On **Windows** computers, reinstalling the JDK may be required.
-
-To relink Java correctly on **macOS** computers, open a Terminal window and type:
+This means that the package needs to be manually installed with
 
 ```
-sudo R CMD javareconf
+install.packages("raster")
 ```
 
-This will solve some of the situations. If the error persists, the only known solution is to replace the currently installed JDK by the one mentioned in the error message (version 10.0.1 in the exampe above). Please be aware that older Java versions may have security vulnerabilities.
-
-JDK may be uninstalled by pasting the typing commands on a Terminal window:
-
-*Uninstall Java*
-```
-sudo rm -fr /Library/Internet\ Plug-Ins/JavaAppletPlugin.plugin 
-sudo rm -fr /Library/PreferencePanes/JavaControlPanel.prefPane 
-sudo rm -fr ~/Library/Application\ Support/Oracle/Java
-```
-
-*Uninstall JDK (replace `<version>` with the JDK version installed on your system)*
+Then, run Organoid Analyst with
 
 ```
-sudo rm -rf /Library/Java/JavaVirtualMachines/jdk<version>.jdk
+source("https://raw.githubusercontent.com/hmbotelho/organoid_analyst/master/installer.R")
+runGitHub("organoid_analyst", "hmbotelho", launch.browser=T)
 ```
 
-*Uninstall Java plugins*
+**Note**: Older R versions may not be compatible with the current version of some packages. This may be solved by installing older package versions. To do this find the [package webpage on CRAN](https://cran.r-project.org/web/packages/available_packages_by_name.html), go into the `Old sources` section and get the URL for an older `tar.gz` package file. Then, install it
 
 ```
-sudo rm -rf /Library/PreferencePanes/JavaControlPanel.prefPane
-sudo rm -rf /Library/Internet\ Plug-Ins/JavaAppletPlugin.plugin
-sudo rm -rf /Library/LaunchAgents/com.oracle.java.Java-Updater.plist
-sudo rm -rf /Library/PrivilegedHelperTools/com.oracle.java.JavaUpdateHelper
-sudo rm -rf /Library/LaunchDaemons/com.oracle.java.Helper-Tool.plist
-sudo rm -rf /Library/Preferences/com.oracle.java.Helper-Tool.plist
+install.packages("https://cran.r-project.org/src/contrib/Archive/xxxx/xxxx_0.0.0.tar.gz", repos=NULL, type="source")
 ```
+___
 
-Any given JDK version can be downloaded from the [Oracle Java Archive](https://www.oracle.com/technetwork/java/javase/archive-139210.html). Select and install the one that matches your operating system, system architecture (32/64 bit) and the version mentioned in the error message.
-
-You should now be able to run Organoid Analyst.
 
 
 
 
 
 ## <a name="citation">9. Citation</a>
-- Hagemeijer MC, Vonk AM, Awatade NT, Silva IAL, Tischer C, Hilsenstein V, Beekman JM, Amaral MD, Botelho HM (2020) **An open-source high-content analysis workflow for CFTR function measurements using the forskolin-induced swelling assay** *submitted*
+Hagemeijer MC, Vonk AM, Awatade NT, Silva IAL, Tischer C, Hilsenstein V, Beekman JM, Amaral MD, Botelho HM (2020) **An open-source high-content analysis workflow for CFTR function measurements using the forskolin-induced swelling assay** *submitted*
 
 
 
