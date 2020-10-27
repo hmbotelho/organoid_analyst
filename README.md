@@ -330,7 +330,7 @@ _**<a name="t1_4">⁴</a>** Select the location of the Fiji executable file on y
     * `FISanalysis_dd-mm-yy_hh-ss.log` Organoid Analyst settings at the moment of data export.
     * `plot_AtA0_xxmin.png` Bar plot of summarized Aₜ/A₀ measurements.
     * `plot_AUC_xxmin.png` Bar plot of summarized AUC measurements at the final time point of the experiment.
-    * `plot_initialslope_xxmin.png` Bar plot of summarized ISR measurements.
+    * `plot_initialswellingrate_xxmin.png` Bar plot of summarized ISR measurements.
     * `plot_overview.png` Plate layout with normalized kinetic curves.
     * `plot_titration_AUC_xxmin.png` Dose-response plot for AUC measurements at the final time point of the experiment.
 
@@ -343,7 +343,7 @@ _**<a name="t1_4">⁴</a>** Select the location of the Fiji executable file on y
 | Fsk                   | 0.02           |          -2.07 |        36.18 |
 | Fsk                   | 0.05           |          14.76 |         6.87 |
 | Fsk                   | 0.128          |         -64.81 |         2.29 |
-| Fsk                   | 0.32           |          29.95 |         1.13 |
+| Fsk                   | 0.32           |         -29.95 |         1.13 |
 | Fsk                   | 0.8            |          -1.88 |        14.57 |
 | Fsk                   | 2              |           43.7 |         12.3 |
 | Fsk                   | 5              |          47.43 |        44.05 |
