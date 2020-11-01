@@ -958,7 +958,12 @@ shinyServer(function(input, output, session) {
             )
         })
         output$plotPlate                 <- renderUI({
-            input$p1_height
+            if(is.null(input$p1_height)){
+                p1_height <- 600
+            } else{
+                p1_height <- input$p1_height
+            }
+            OA[["p1_height"]] <<- p1_height
             plotOutput("plot_plate", height = OA[["p1_height"]])
         })
         output$UI_options_plotPlate      <- renderUI({
