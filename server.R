@@ -183,7 +183,9 @@ shinyServer(function(input, output, session) {
             if(Sys.info()['sysname'] == "Windows") OA[["fiji_binary"]] <<- OA[["fiji_binary"]]
             # Initialize variables: Raw images
             sample_rawImagePath      <<- reactive({
-                OA[["dataset.raw"]][1,OA[["Settings_colRawImgPath"]]]
+                temp <- OA[["dataset.raw"]][1,OA[["Settings_colRawImgPath"]]]
+                temp <- gsub("%20", " ", temp)    # %20 render spaces correctly
+                temp
             })
             sample_remappedImagePath <<- reactive({
                 pathInTable         <- ifelse(is.null(input$Settings_pathInTable),
@@ -693,11 +695,16 @@ shinyServer(function(input, output, session) {
             # Raw images
             pathInTable                           <- gsub("\\\\", "/", OA[["Settings_pathInTable"]])
             pathInTable                           <- sub("^file:///", "", pathInTable)
+            pathInTable                           <- gsub("%20", " ", pathInTable)
+            
             pathInComputer                        <- gsub("\\\\", "/", OA[["Settings_pathInComputer"]])
             pathInComputer                        <- sub("^file:///", "", pathInComputer)
+            pathInComputer                        <- gsub("%20", " ", pathInComputer)
+            
             OA[["dataset.raw"]]$OA_path_rawimage <<- OA[["dataset.raw"]][[OA[["Settings_colRawImgPath"]]]]
-            OA[["dataset.raw"]]$OA_path_rawimage <<- sub("^file:///", "", OA[["dataset.raw"]]$OA_path_rawimage)
             OA[["dataset.raw"]]$OA_path_rawimage <<- gsub("\\\\", "/", OA[["dataset.raw"]]$OA_path_rawimage)
+            OA[["dataset.raw"]]$OA_path_rawimage <<- sub("^file:///", "", OA[["dataset.raw"]]$OA_path_rawimage)
+            OA[["dataset.raw"]]$OA_path_rawimage <<- gsub("%20", " ", OA[["dataset.raw"]]$OA_path_rawimage)
             OA[["dataset.raw"]]$OA_path_rawimage <<- gsub(pathInTable,
                                                           pathInComputer,
                                                           OA[["dataset.raw"]]$OA_path_rawimage,
@@ -708,12 +715,18 @@ shinyServer(function(input, output, session) {
 
                 pathInTable                          <- gsub("\\\\", "/", OA[["Settings_MimagepathInTable"]])
                 pathInTable                          <- sub("^file:///", "", pathInTable)
+                pathInTable                          <- sub("%20", " ", pathInTable)
+                
                 pathInComputer                       <- gsub("\\\\", "/", OA[["Settings_MimagepathInComputer"]])
                 pathInComputer                       <- sub("^file:///", "", pathInComputer)
+                pathInComputer                       <- sub("%20", " ", pathInComputer)
+                
                 maskSuffix                           <- OA[["Settings_maskFileSuffix"]]
+                
                 OA[["dataset.raw"]]$OA_path_rawmask <<- OA[["dataset.raw"]][[OA[["Settings_colRawImgPath"]]]]
                 OA[["dataset.raw"]]$OA_path_rawmask <<- gsub("\\\\", "/", OA[["dataset.raw"]]$OA_path_rawmask)
                 OA[["dataset.raw"]]$OA_path_rawmask <<- sub("^file:///", "", OA[["dataset.raw"]]$OA_path_rawmask)
+                OA[["dataset.raw"]]$OA_path_rawmask <<- gsub("%20", " ", OA[["dataset.raw"]]$OA_path_rawmask)
                 OA[["dataset.raw"]]$OA_path_rawmask <<- sub(pathInTable, 
                                                             pathInComputer, 
                                                             OA[["dataset.raw"]]$OA_path_rawmask,
